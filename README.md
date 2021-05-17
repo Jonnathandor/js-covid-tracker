@@ -10,13 +10,15 @@ Create a website that provides information, graphs, and stats about Covid-19.
 - As a user, I want to be able to see total deaths on the map.
 - As a user, I want to be able to see the total recovered on the map.
 
-User Flow Diagram
+## User Flow Diagram
+- https://app.diagrams.net/#G1lxvNolU0NrIqmw_mgZ_MgDHnQHN8l9WD
 
-
-Business Requirements
+## Business Requirements
 
 
 	
-Technical Requirements
+## Technical Requirements
 - Use Javascript.
 - Use HTML.
+- Use corona.lmao.ninja API
+- Use google maps API 
