@@ -38,8 +38,28 @@ const displayDataOnMap = (countries) => {
             radius: Math.sqrt(country.cases) * 100,
         });
 
+        var html = `
+            <div class="info-container">
+                <div class="info-flag">
+                    <img src="${country.countryInfo.flag}"/>
+                </div>
+                <div class="info-name">
+                    ${country.country}
+                </div>
+                <div class="info-confirmed">
+                    Total: ${country.cases}
+                </div>
+                <div class="info-recovered">
+                    Recovered: ${country.recovered}
+                </div>
+                <div class="info-deaths">
+                    Deaths: ${country.deaths}
+                </div>
+            </div>        
+        `
+
         let infoWindow = new google.maps.InfoWindow({
-            content: 'Hello',
+            content: html,
             position: countryCircle.center
         });
 
