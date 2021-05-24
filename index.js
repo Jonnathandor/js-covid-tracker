@@ -4,8 +4,9 @@ let map;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 49.8951, lng: 97.1384 },
-        zoom: 1,
+        center: { lat: 56.1304, lng: 106.3468 },
+        zoom: 3,
+        styles: mapStyle
     });
 
     // infoWindow = new google.maps.infoWindow();
@@ -17,6 +18,7 @@ fetch('https://corona.lmao.ninja/v2/countries')
 }).then(data => {
     displayDataOnMap(data);
     buildCountryTable(data);
+    getHistoricalData();
 });
 
 const displayDataOnMap = (countries) => {
@@ -88,5 +90,83 @@ const buildCountryTable = (data) => {
     })
 
     document.getElementById('table-data').innerHTML = html;
+}
+
+const buildChart = (chartData) => {
+    let timeFormat = 'MM/DD/YY';
+    const data = {
+        datasets: [{
+            label: 'Total Cases',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: chartData,
+        }]
+    };
+
+    // const options = {
+    //     interaction: {
+    //         mode: 'index'
+    //     },
+    //     plugins: {
+    //         tooltips: {
+    //             intersect: false
+    //         }
+    //     },
+    //     scales: {
+    //         x: [{
+    //             type: "time",
+    //             time: {
+    //                 format: timeFormat,
+    //                 tooltipFormat: 'll'
+    //             },
+    //             scaleLabel: {
+    //                 display: false,
+    //                 labelString: 'Date'
+    //             }
+    //         }],
+    //         y: [{
+    //             scaleLabel: {
+    //                 display: true,
+    //                 labelString: 'value'
+    //             }
+    //         }]
+    //     }
+    // }
+
+    const config = {
+    type: 'line',
+    data,
+    options: {}
+    };
+
+var myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+    );
+}
+
+const buildChartData = (data) => {
+    let chartData = [];
+
+    for(let date in data.cases){
+        let newDataPoint = {
+            x: date,
+            y: data.cases[date]
+        }
+        
+        chartData.push(newDataPoint);
+    }
+
+    return chartData;
+}
+
+const getHistoricalData = () => {
+    fetch('https://corona.lmao.ninja/v2/historical/all?lastdays=120')
+    .then((response) => {
+        return response.json();
+    }).then(data => {
+        let chartData = buildChartData(data);
+        buildChart(chartData)
+    });
 }
 
