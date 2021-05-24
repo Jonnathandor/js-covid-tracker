@@ -12,7 +12,7 @@ function initMap() {
     // infoWindow = new google.maps.infoWindow();
 }
 
-fetch('https://corona.lmao.ninja/v2/countries')
+fetch('http://localhost:3000/countries')
 .then((response) => {
     return response.json();
 }).then(data => {
