@@ -1,0 +1,28 @@
+.main {
+    height: 100vh;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.map-container {
+    height: 500px;
+}
+
+#map {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.chart-container {
+    height: 300px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.chart-container col {
+    background-color: #eff2f6;
+    border-radius: 12px;
+}
