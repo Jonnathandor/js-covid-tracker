@@ -16,6 +16,7 @@ fetch('https://corona.lmao.ninja/v2/countries')
     return response.json();
 }).then(data => {
     displayDataOnMap(data);
+    buildCountryTable(data);
 });
 
 const displayDataOnMap = (countries) => {
@@ -40,8 +41,8 @@ const displayDataOnMap = (countries) => {
 
         var html = `
             <div class="info-container">
-                <div class="info-flag">
-                    <img src="${country.countryInfo.flag}"/>
+                <div class="info-flag" style="background-image: url(${country.countryInfo.flag})">
+                    
                 </div>
                 <div class="info-name">
                     ${country.country}
@@ -56,7 +57,7 @@ const displayDataOnMap = (countries) => {
                     Deaths: ${country.deaths}
                 </div>
             </div>        
-        `
+        `;
 
         let infoWindow = new google.maps.InfoWindow({
             content: html,
@@ -71,5 +72,21 @@ const displayDataOnMap = (countries) => {
             infoWindow.close();
         });
     });
+}
+
+const buildCountryTable = (data) => {
+    let html = '';
+    data.forEach((country) => {
+        html += `
+        <tr>
+            <td>${country.country}</td>
+            <td>${country.cases}</td>
+            <td>${country.recovered}</td>
+            <td>${country.deaths}</td>
+        </tr>
+        `;
+    })
+
+    document.getElementById('table-data').innerHTML = html;
 }
 
