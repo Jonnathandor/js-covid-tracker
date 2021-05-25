@@ -19,6 +19,7 @@ fetch('http://localhost:3000/countries')
     displayDataOnMap(data);
     buildCountryTable(data);
     getHistoricalData();
+    getWorldCoronaData();
 });
 
 const displayDataOnMap = (countries) => {
@@ -97,8 +98,8 @@ const buildChart = (chartData) => {
     const data = {
         datasets: [{
             label: 'Total Cases',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(6, 1, 148)',
+            borderColor: 'rgb(6, 1, 148)',
             data: chartData,
         }]
     };
@@ -139,9 +140,39 @@ const buildChart = (chartData) => {
     options: {}
     };
 
-var myChart = new Chart(
+    var myChart = new Chart(
     document.getElementById('myChart'),
     config
+    );
+}
+
+const buildPieChart = (cases) => {
+    const data = {
+        labels: [
+          'Active',
+          'Recovered',
+          'Deaths'
+        ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [cases.active, cases.recovered, cases.deaths],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+
+      const config = {
+        type: 'pie',
+        data: data
+      };
+
+      var myChart = new Chart(
+        document.getElementById('myPieChart'),
+        config
     );
 }
 
@@ -160,13 +191,31 @@ const buildChartData = (data) => {
     return chartData;
 }
 
+const getWorldCoronaData = () => {
+    fetch('https://disease.sh/v2/all')
+    .then((response) => {
+        return response.json();
+    }).then(data => {
+        buildPieChart(data)
+        populateCards(data);
+    });
+}
+
 const getHistoricalData = () => {
     fetch('https://corona.lmao.ninja/v2/historical/all?lastdays=120')
     .then((response) => {
         return response.json();
     }).then(data => {
         let chartData = buildChartData(data);
-        buildChart(chartData)
+        buildChart(chartData);
     });
+}
+
+const populateCards = (data) => {
+    console.log(data)
+    document.getElementById('total-cases').innerText = data.cases;
+    document.getElementById('active-cases').innerText = data.active;
+    document.getElementById('recovered-cases').innerText = data.recovered;
+    document.getElementById('deaths').innerText = data.deaths
 }
 

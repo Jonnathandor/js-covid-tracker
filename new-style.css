@@ -26,3 +26,12 @@
     background-color: #eff2f6;
     border-radius: 12px;
 }
+
+#myChart {
+    max-width: 600px;
+}
+
+#myPieChart {
+    max-width: 300px;
+    max-height: 300px;
+}

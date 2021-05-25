@@ -33,7 +33,7 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Total Cases</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">1,434,234</h6>
+                                <h6 class="card-subtitle mb-2 text-muted" id="total-cases">-</h6>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Active Cases</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">1,434,234</h6>
+                                <h6 class="card-subtitle mb-2 text-muted" id="active-cases">-</h6>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Recovered Cases</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">1,434,234</h6>
+                                <h6 class="card-subtitle mb-2 text-muted" id="recovered-cases">-</h6>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Deaths</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">1,434,234</h6>
+                                <h6 class="card-subtitle mb-2 text-muted" id="deaths">-</h6>
                             </div>
                         </div>
                     </div>
@@ -68,10 +68,12 @@
                     </div>
                 </div>
                 <div class="row chart-container mt-3">
-                    <div class="col liner-chart mr-3">
+                    <div class="col line-chart mr-3">
                         <canvas id="myChart"></canvas>
                     </div>
-                    <div class="col"></div>
+                    <div class="col">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="col-4"></div>
