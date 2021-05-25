@@ -35,3 +35,9 @@
     max-width: 300px;
     max-height: 300px;
 }
+
+.side-panel-container {
+    background-color: #eff2f6;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+}
