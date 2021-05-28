@@ -1,6 +1,18 @@
+window.onload = () => {
+    getCountryData();
+    getHistoricalData();
+    getWorldCoronaData();
+}
+
 let map;
 let coronaGlobal;
-
+let mapCircles = [];
+const casesTypeColors = {
+    cases: '#1d2c4d',
+    active: '#9d80fe',
+    recovered: '#7dd71d',
+    deaths: '#fb4443'
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -12,18 +24,29 @@ function initMap() {
     // infoWindow = new google.maps.infoWindow();
 }
 
-fetch('http://localhost:3000/countries')
-.then((response) => {
-    return response.json();
-}).then(data => {
-    coronaGlobal = data;
-    displayDataOnMap(data);
-    buildCountryTable(data);
-    getHistoricalData();
-    getWorldCoronaData();
-});
+const getCountryData = () => {
+    fetch('http://localhost:3000/countries')
+    .then((response) => {
+        return response.json();
+    }).then(data => {
+        coronaGlobal = data;
+        displayDataOnMap(data);
+        buildCountryTable(data);
+    });
+}
 
-const displayDataOnMap = (countries) => {
+const changeDataSelection = (casesType) => {
+    clearTheMap();
+    displayDataOnMap(coronaGlobal, casesType);
+}
+
+const clearTheMap = () => {
+    for(let circle of mapCircles){
+        circle.setMap(null);
+    }
+}
+
+const displayDataOnMap = (countries, casesType = 'cases') => {
 
     countries.map(country => {
 
@@ -33,15 +56,17 @@ const displayDataOnMap = (countries) => {
         }
 
         let countryCircle = new google.maps.Circle({
-            strokeColor: "#FF0000",
+            strokeColor: casesTypeColors[casesType],
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: "#FF0000",
+            fillColor: casesTypeColors[casesType],
             fillOpacity: 0.35,
             map,
             center: countryCenter,
-            radius: Math.sqrt(country.cases) * 100,
+            radius: Math.sqrt(country[casesType]) * 100,
         });
+
+        mapCircles.push(countryCircle);
 
         var html = `
             <div class="info-container">
@@ -121,4 +146,5 @@ const populateCards = (data) => {
     document.getElementById('recovered-cases').innerText = data.recovered;
     document.getElementById('deaths').innerText = data.deaths
 }
+
 

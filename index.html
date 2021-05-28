@@ -30,7 +30,7 @@
                 </div>
                 <div class="row stats-container">
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 18rem;" onclick="changeDataSelection('cases')">
                             <div class="card-body">
                                 <h5 class="card-title">Total Cases</h5>
                                 <h6 class="card-subtitle mb-2 text-muted" id="total-cases">-</h6>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card active-cases-card" style="width: 18rem;" onclick="changeDataSelection('active')">
                             <div class="card-body">
                                 <h5 class="card-title">Active Cases</h5>
                                 <h6 class="card-subtitle mb-2 text-muted" id="active-cases">-</h6>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 18rem;" onclick="changeDataSelection('recovered')">
                             <div class="card-body">
                                 <h5 class="card-title">Recovered Cases</h5>
                                 <h6 class="card-subtitle mb-2 text-muted" id="recovered-cases">-</h6>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 18rem;" onclick="changeDataSelection('deaths')">
                             <div class="card-body">
                                 <h5 class="card-title">Deaths</h5>
                                 <h6 class="card-subtitle mb-2 text-muted" id="deaths">-</h6>
