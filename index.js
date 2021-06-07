@@ -116,7 +116,7 @@ const buildCountryTable = (data) => {
         `;
     })
 
-    // document.getElementById('table-data').innerHTML = html;
+    document.getElementById('table-data').innerHTML = html;
 }
 
 const getWorldCoronaData = () => {
