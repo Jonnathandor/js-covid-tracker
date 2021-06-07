@@ -40,4 +40,5 @@
     background-color: #eff2f6;
     border-bottom-left-radius: 30px;
     border-top-left-radius: 30px;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,0.5);
 }

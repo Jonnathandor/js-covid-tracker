@@ -141,10 +141,10 @@ const getHistoricalData = () => {
 
 const populateCards = (data) => {
     console.log(data)
-    document.getElementById('total-cases').innerText = data.cases;
-    document.getElementById('active-cases').innerText = data.active;
-    document.getElementById('recovered-cases').innerText = data.recovered;
-    document.getElementById('deaths').innerText = data.deaths
+    document.getElementById('total-cases').innerText = numeral(data.cases).format('+0,0');
+    // document.getElementById('active-cases').innerText = data.active;
+    document.getElementById('recovered-cases').innerText = numeral(data.recovered).format('+0,0');
+    document.getElementById('deaths').innerText = numeral(data.deaths).format('+0,0');
 }
 
 
