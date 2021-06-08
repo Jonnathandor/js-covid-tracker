@@ -2,6 +2,7 @@ window.onload = () => {
     getCountryData();
     getHistoricalData();
     getWorldCoronaData();
+    $('.ui.dropdown').dropdown();
 }
 
 let map;
