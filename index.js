@@ -1,13 +1,17 @@
 window.onload = () => {
-    getCountryData();
+    getCountriesData();
     getHistoricalData();
     getWorldCoronaData();
-    $('.ui.dropdown').dropdown();
 }
 
 let map;
 let coronaGlobal;
 let mapCircles = [];
+const worldWideSelection = {
+    name: 'Worldwide',
+    value: 'www',
+    selected: true
+}
 const casesTypeColors = {
     cases: '#1d2c4d',
     active: '#9d80fe',
@@ -15,9 +19,14 @@ const casesTypeColors = {
     deaths: '#fb4443'
 }
 
+const mapCenter = {
+    lat: 56.1304,
+    lng: 106.3468
+}
+
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 56.1304, lng: 106.3468 },
+        center: mapCenter,
         zoom: 3,
         styles: mapStyle
     });
@@ -25,15 +34,45 @@ function initMap() {
     // infoWindow = new google.maps.infoWindow();
 }
 
-const getCountryData = () => {
+const getCountriesData = () => {
     fetch('http://localhost:3000/countries')
     .then((response) => {
         return response.json();
     }).then(data => {
         coronaGlobal = data;
+        setSearchList(data);
         displayDataOnMap(data);
         buildCountryTable(data);
     });
+}
+
+const initDropdown = (searchList) => {
+    $('.ui.dropdown').dropdown({
+        values: searchList,
+        onChange: function(value, text) {
+            if(value !== worldWideSelection.value){
+                getCountryData(value);
+            } else {
+                getWorldCoronaData();
+            }
+        }
+    });
+
+}
+
+const setSearchList = (data) => {
+    let searchList = [];
+
+    searchList.push(worldWideSelection);
+
+    data.forEach(countryData => {
+        searchList.push({
+            name: countryData.country,
+            value: countryData.countryInfo.iso3
+        })
+    })
+
+    initDropdown(searchList);
 }
 
 const changeDataSelection = (casesType) => {
@@ -45,6 +84,14 @@ const clearTheMap = () => {
     for(let circle of mapCircles){
         circle.setMap(null);
     }
+}
+
+const setMapCenter = (lat, long, zoom) => {
+    map.setZoom(zoom)
+    map.panTo({
+        lat: lat,
+        lng: long
+    });
 }
 
 const displayDataOnMap = (countries, casesType = 'cases') => {
@@ -120,13 +167,24 @@ const buildCountryTable = (data) => {
     document.getElementById('table-data').innerHTML = html;
 }
 
+const getCountryData = (countryIso) => {
+    const URL = `https://disease.sh/v3/covid-19/countries/${countryIso}`;
+    fetch(URL)
+    .then((response) => {
+        return response.json();
+    }).then(data => {
+        populateCards(data);
+        setMapCenter(data.countryInfo.lat, data.countryInfo.long, 2);
+    });
+}
+
 const getWorldCoronaData = () => {
     fetch('https://disease.sh/v2/all')
     .then((response) => {
         return response.json();
     }).then(data => {
-        buildPieChart(data)
         populateCards(data);
+        setMapCenter(mapCenter.lat, mapCenter.lng, 3);
     });
 }
 
